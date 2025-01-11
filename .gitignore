@@ -1,0 +1,67 @@
+# Android Studio相关
+*.iml
+/.idea/
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+
+# Gradle相关
+.gradle
+/build/
+/app/build/
+/captures/
+/gradle/wrapper/gradle-wrapper.properties.lock
+.gradle.lockfile
+
+# NDK相关
+.externalNativeBuild/
+.cxx/
+obj/
+
+# 本地配置文件
+local.properties
+/local.properties
+
+# 日志文件
+*.log
+
+# APK/AAR输出文件
+*.apk
+*.aar
+*.ap_
+
+# Java字节码和Dex文件
+*.class
+*.dex
+
+# ProGuard/R8输出
+/proguard/
+/app/proguard/
+/app/build/outputs/mapping/
+
+# Lint中间文件
+/lint/intermediates/
+
+# MacOS系统文件
+.DS_Store
+
+# Windows系统文件
+Thumbs.db
+
+# Kotlin编译缓存
+/.kotlin/
+
+# VSCode相关
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Keystore和秘钥文件（重要：防止泄露签名文件）
+*.keystore
+*.jks
+*.pem
+*.crt
+*.key
