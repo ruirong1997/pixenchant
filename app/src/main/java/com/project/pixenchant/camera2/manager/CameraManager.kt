@@ -1,19 +1,15 @@
 package com.project.pixenchant.camera2.manager
 
-import MyRenderer
 import android.graphics.Bitmap
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
-import android.opengl.GLSurfaceView
 import android.util.Log
 import android.util.Size
 import android.view.Surface
 import android.view.WindowManager
-import androidx.camera.core.processing.SurfaceProcessorNode.In
 import com.project.pixenchant.camera2.renderer.CameraRenderer
-import com.project.pixenchant.camera2.renderer.TestRenderer
 import com.project.pixenchant.ext.getAppContext
 import com.project.pixenchant.utils.BitmapUtils
 import kotlinx.coroutines.CoroutineScope

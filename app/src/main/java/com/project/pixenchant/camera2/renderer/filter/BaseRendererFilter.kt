@@ -139,11 +139,11 @@ abstract class BaseRendererFilter: IBaseFilter {
         GLES30.glClearColor(0f, 0f, 0f, 1f)
         mWidth = width
         mHeight = height
-        mProgram = getProgram()
     }
 
     override fun onDrawFrame(gl: GL10?, surfaceTexture: SurfaceTexture?) {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
+        mProgram = getProgram()
     }
 
     abstract fun getProgram(): Int

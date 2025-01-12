@@ -1,4 +1,4 @@
-package com.project.pixenchant.ui.compose.camera2
+package com.project.pixenchant.ui.compose.camera
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
@@ -28,6 +28,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,10 +44,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pixenchant.R
 import com.project.pixenchant.ext.noRippleSingleClick
-import com.project.pixenchant.camera2.viewmodel.Camera2ViewModel
-import com.project.pixenchant.ext.singleClick
+import com.project.pixenchant.viewmodel.Camera2ViewModel
+import com.project.pixenchant.ui.compose.dialog.FilterDialog
+import com.project.pixenchant.ui.compose.dialog.FilterSelectDialog
+import com.project.pixenchant.viewmodel.DialogViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -54,28 +58,35 @@ import kotlinx.coroutines.launch
  * 右侧工具栏
  */
 @Composable
-fun ActionSideBar(cameraViewModel: Camera2ViewModel, modifier: Modifier = Modifier) {
+fun ActionSideBar(cameraViewModel: Camera2ViewModel,
+                  modifier: Modifier = Modifier,
+                  dialogViewModel: DialogViewModel = hiltViewModel()) {
 
     val openFilterDialog = remember { mutableStateOf(false) }
+    val isOpenFilterDialog by dialogViewModel.showFilterDialog.collectAsState(false)
+
+
+    Box(modifier = Modifier.fillMaxSize()) {
+
+    }
 
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp) // 设置所有项之间的间隔
     ) {
+
         ActionItem(R.drawable.ic_switch_camera, "翻转") { cameraViewModel.switchCamera() }
-        ActionItem(R.drawable.ic_filter, "滤镜") {
-            Log.d("openFilterDialog", "Click")
-            openFilterDialog.value = true
-        }
+        ActionItem(R.drawable.ic_filter, "滤镜") { dialogViewModel.showFilterDialog(true) }
 //        ActionItem(R.drawable.ic_switch_camera, "切换摄像头") { cameraViewModel.switchCamera() }
 
-            // 通过回调获取关闭事件
-        FilterDialog(
-            openDialog = openFilterDialog.value,
-            onDismiss = { openFilterDialog.value = false },
-            onOpen = { openFilterDialog.value = true } // 外部控制打开弹窗
-        )
     }
+
+    //滤镜弹窗
+    FilterDialog(
+        openDialog = isOpenFilterDialog,
+        onDismiss = { dialogViewModel.showFilterDialog(false) },
+        onOpen = { } // 外部控制打开弹窗
+    )
 }
 
 @Composable
@@ -110,123 +121,7 @@ fun ActionItem(resource: Int, text: String, onClick: () -> Unit) {
 }
 
 
-/**
- * 打开滤镜项目
- */
-@Composable
-fun FilterSelectDialog() {
 
-    val bottomHeight = with(LocalDensity.current) {
-        LocalContext.current.resources.getDimension(R.dimen.bottom_dialog_height).toDp()
-    }
-
-    val mediaTypes = listOf("Media 1", "Media 2", "Media 3") // 示例媒体类型列表
-    val pagerState = rememberPagerState(initialPage = 0, pageCount = { mediaTypes.size })
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.Blue)
-            .height(bottomHeight)
-    ) {
-        // TabRow，显示不同的标签
-        TabRow(
-            selectedTabIndex = pagerState.currentPage,
-            modifier = Modifier.fillMaxWidth(),
-            indicator = { tabPositions ->
-                TabRowDefaults.Indicator(
-                    modifier = Modifier.tabIndicatorOffset(
-                        currentTabPosition = tabPositions[pagerState.currentPage],
-                        pageOffset = pagerState.currentPageOffsetFraction,
-                    ),
-                    color = Color.Black, // 设置指示器颜色
-                    height = 2.dp // 设置指示器的高度
-                )
-            },
-            divider = {} // 这里设置 divider 为空，去掉底部边框
-        ) {
-            mediaTypes.forEachIndexed { index, mediaType ->
-                Tab(
-                    selected = pagerState.currentPage == index,
-                    onClick = {}
-                ) {
-                    Text(
-                        text = mediaType,
-                        modifier = Modifier
-                            .height(48.dp)
-                            .fillMaxWidth()
-                            .clickable {
-                            }.noRippleSingleClick {
-                                MainScope().launch {
-                                    pagerState.scrollToPage(index)
-                                }
-                            }
-                            .wrapContentSize(Alignment.Center),
-                        style = TextStyle(
-                            fontWeight = if (pagerState.currentPage == index) FontWeight.Bold else FontWeight.Normal,
-                            color = if (pagerState.currentPage == index) Color.Black else Color.Gray
-                        )
-                    )
-                }
-            }
-        }
-
-        // HorizontalPager 用于显示内容
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize()
-        ) { page ->
-            // 页面内容可以根据当前的 mediaType 来进行渲染
-            Text(
-                text = "Content for ${mediaTypes[page]}",
-                modifier = Modifier.fillMaxSize(),
-                style = TextStyle(fontSize = 20.sp)
-            )
-        }
-    }
-}
-
-@Composable
-fun FilterDialog(
-    openDialog: Boolean,  // 外部控制打开弹窗的状态
-    onDismiss: () -> Unit, // 外部控制关闭弹窗的回调
-    onOpen: () -> Unit = {} // 额外提供一个回调用于外部控制打开弹窗
-) {
-    val durationTime = 500
-    // 显示 Dialog
-    // Popup 显示内容
-    Popup(
-        onDismissRequest = {
-            onDismiss() // 关闭时调用外部回调
-        }
-    ) {
-        // 使用 AnimatedVisibility 来为 Popup 添加动画效果
-        AnimatedVisibility(
-            visible = openDialog,
-            enter = slideInVertically(
-                initialOffsetY = { it }, // 从底部弹出
-                animationSpec = tween(durationMillis = durationTime)
-            ) + fadeIn(animationSpec = tween(durationMillis = durationTime)), // 渐现效果
-            exit = slideOutVertically(
-                targetOffsetY = { it }, // 向底部滑动消失
-                animationSpec = tween(durationMillis = durationTime)
-            ) + fadeOut(animationSpec = tween(durationMillis = durationTime)) // 渐隐效果
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Transparent) // 设置透明背景
-                    .clickable {}
-                    .noRippleSingleClick {
-                        onDismiss() // 点击外部关闭对话框，调用外部回调
-                    }
-                    .wrapContentSize(Alignment.BottomCenter) // 从底部弹出
-            ) {
-                // Dialog 内容
-                FilterSelectDialog()
-            }
-        }
-    }
-}
 
 @Composable
 fun MyPopupDemo() {

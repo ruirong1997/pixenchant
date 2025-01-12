@@ -9,6 +9,9 @@ import com.project.pixenchant.camera2.renderer.manager.ProgramManager
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
+/**
+ * 处理图片
+ */
 class ImageRender : GLSurfaceView.Renderer {
 
     companion object {

@@ -1,6 +1,5 @@
-package com.project.pixenchant.camera2.viewmodel
+package com.project.pixenchant.viewmodel
 
-import MyRenderer
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.SurfaceTexture
@@ -15,7 +14,6 @@ import com.project.pixenchant.camera2.manager.CameraManager
 import com.project.pixenchant.camera2.model.CameraRepository
 import com.project.pixenchant.camera2.model.MediaRepository
 import com.project.pixenchant.camera2.renderer.CameraRenderer
-import com.project.pixenchant.camera2.renderer.TestRenderer
 import com.project.pixenchant.ext.getAppContext
 import com.project.pixenchant.utils.BitmapUtils
 import com.project.pixenchant.utils.CameraUtils.getCaptureOrientation

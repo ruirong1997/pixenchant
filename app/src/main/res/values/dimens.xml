@@ -10,5 +10,5 @@
     <dimen name="item_min_height">24dp</dimen>
     <dimen name="btn_radius">96dp</dimen>
 
-    <dimen name="bottom_dialog_height">216dp</dimen>
+    <dimen name="bottom_dialog_height">186dp</dimen>
 </resources>

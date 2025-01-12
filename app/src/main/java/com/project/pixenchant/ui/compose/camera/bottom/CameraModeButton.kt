@@ -1,8 +1,6 @@
-package com.project.pixenchant.ui.compose.camera2.bottom
+package com.project.pixenchant.ui.compose.camera.bottom
 
 import android.graphics.Bitmap
-import android.util.Log
-import android.view.Surface
 import android.view.WindowManager
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
@@ -24,9 +22,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.project.pixenchant.R
 import com.project.pixenchant.camera2.data.CameraMode
-import com.project.pixenchant.camera2.viewmodel.Camera2ViewModel
-import com.project.pixenchant.ui.compose.camera2.CaptureImageDialog
-import com.project.pixenchant.utils.BitmapUtils
+import com.project.pixenchant.viewmodel.Camera2ViewModel
+import com.project.pixenchant.ui.compose.camera.CaptureImageDialog
 
 @Composable
 fun CameraModeButton(viewModel: Camera2ViewModel, modifier: Modifier) {

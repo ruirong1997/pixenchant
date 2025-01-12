@@ -1,4 +1,4 @@
-package com.project.pixenchant.ui.compose.camera2.bottom
+package com.project.pixenchant.ui.compose.camera.bottom
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateDpAsState
@@ -8,13 +8,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +39,7 @@ import com.project.pixenchant.camera2.data.CameraMode
 import com.project.pixenchant.camera2.data.CameraModeItem
 import com.project.pixenchant.ext.getScreenCenterXPx
 import com.project.pixenchant.ext.noRippleSingleClick
-import com.project.pixenchant.camera2.viewmodel.Camera2ViewModel
+import com.project.pixenchant.viewmodel.Camera2ViewModel
 import com.project.pixenchant.ext.getScreenCenterXDp
 import kotlin.math.roundToInt
 
@@ -72,9 +70,10 @@ fun CameraModeSelector(viewModel: Camera2ViewModel) {
     // 记录Row的宽度和位置
     var rowPosition by remember { mutableIntStateOf(0) }
 
-    val durationTime = 500
+    val durationTime = 300
+
     // 动画位置变化
-    var targetOffset by remember { mutableIntStateOf(0) }
+    var targetOffset by remember { mutableIntStateOf(screenCenterXDp / 2) }
     val animatedRowOffset = animateDpAsState(
         targetValue = targetOffset.dp, // 宽度动画：点击后偏移
         animationSpec = tween(durationMillis = durationTime), label = "" // 动画持续时间
@@ -112,7 +111,7 @@ fun CameraModeSelector(viewModel: Camera2ViewModel) {
         //选项
         Row(
             modifier = Modifier
-                .align(Alignment.TopStart)
+                .align(Alignment.TopCenter)
                 .offset(x = animatedRowOffset.value) // 使用动画偏移
                 .onGloballyPositioned { coordinates ->
                     rowPosition = coordinates.boundsInWindow().left.toInt()

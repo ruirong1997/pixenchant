@@ -5,7 +5,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,12 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.project.pixenchant.ui.compose.camera2.Camera2Screen
-import com.project.pixenchant.camera2.viewmodel.Camera2ViewModel
+import com.project.pixenchant.ui.compose.camera.Camera2Screen
+import com.project.pixenchant.viewmodel.Camera2ViewModel
 
 
 @Composable
 fun CameraPermissionScreen(
+    modifier: Modifier,
     cameraViewModel: Camera2ViewModel = hiltViewModel()
 ) {
     // 动态监听权限状态
@@ -45,7 +45,7 @@ fun CameraPermissionScreen(
     // UI 根据权限状态更新
     if (hasPermission) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -54,7 +54,7 @@ fun CameraPermissionScreen(
         }
     } else {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

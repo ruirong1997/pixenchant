@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="filter_title_array">
+        <item>None</item>
+        <item>@string/featured</item>
+        <item>@string/portrait</item>
+        <item>@string/daily</item>
+        <item>@string/vintage</item>
+        <item>@string/food</item>
+        <item>@string/scenery</item>
+        <item>@string/black_white</item>
+    </string-array>
+
+    <string-array name="filter_featured_array">
+        <item>高清</item>
+        <item>自然</item>
+        <item>清透感</item>
+    </string-array>
+
+    <string-array name="filter_portrait_array">
+        <item>冷系</item>
+        <item>硬朗</item>
+        <item>金属</item>
+        <item>换肤</item>
+        <item>粉瓷</item>
+        <item>白皙</item>
+    </string-array>
+
+    <string-array name="filter_daily_array">
+        <item>原相机</item>
+        <item>ABG</item>
+        <item>油画</item>
+    </string-array>
+
+    <string-array name="filter_vintage_array">
+        <item>CT2</item>
+        <item>冷调胶片</item>
+        <item>漏光胶片</item>
+        <item>卡梅尔</item>
+        <item>KCP2</item>
+        <item>HUJI</item>
+    </string-array>
+
+    <string-array name="filter_food_array">
+        <item>暖食</item>
+        <item>料理</item>
+        <item>深夜食堂</item>
+        <item>气泡水</item>
+    </string-array>
+
+    <string-array name="filter_scenery_array">
+        <item>雾野</item>
+        <item>宿营</item>
+        <item>绿妍</item>
+        <item>晚樱</item>
+    </string-array>
+
+    <string-array name="filter_black_white_array">
+        <item>默片</item>
+        <item>过往</item>
+    </string-array>
+
+</resources>

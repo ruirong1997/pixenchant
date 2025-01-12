@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">PixEnchant</string>
+
+    <string name="featured">精选</string>
+    <string name="portrait">人像</string>
+    <string name="daily">日常</string>
+    <string name="vintage">复古</string>
+    <string name="food">美食</string>
+    <string name="scenery">风景</string>
+    <string name="black_white">黑白</string>
 </resources>

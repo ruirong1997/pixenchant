@@ -1,9 +1,8 @@
-package com.project.pixenchant.ui.compose.camera2
+package com.project.pixenchant.ui.compose.camera
 
 import android.app.Activity
 import android.graphics.SurfaceTexture
 import android.opengl.GLSurfaceView
-import android.view.WindowManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
@@ -13,18 +12,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.project.pixenchant.camera2.viewmodel.Camera2ViewModel
+import com.project.pixenchant.viewmodel.Camera2ViewModel
 
 // 封装相机预览逻辑
 @Composable
 fun CameraPreview(
-    onInitialized: (SurfaceTexture, Int, Int) -> Unit,
+    onInitialized: (SurfaceTexture) -> Unit,
     cameraViewModel: Camera2ViewModel,
     modifier: Modifier = Modifier
 ) {
 
     val context = LocalContext.current
-    val windowManager = context.getSystemService(WindowManager::class.java)
     val window = (context as? Activity)?.window
 
     // 设置状态栏为透明
@@ -53,9 +51,9 @@ fun CameraPreview(
                 val renderer = cameraViewModel.getRenderer()
                 setRenderer(renderer) // 设置自定义渲染器
 
-//                renderer.mOnSurfaceTextureAvailable = { surfaceTexture ->
-//                    onInitialized(surfaceTexture, width, height)
-//                }
+                renderer.mOnSurfaceTextureAvailable = { surfaceTexture ->
+                    onInitialized(surfaceTexture)
+                }
             }
         },
         modifier = modifier

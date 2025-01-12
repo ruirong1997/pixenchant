@@ -3,6 +3,7 @@ package com.project.pixenchant.di
 import android.content.Context
 import com.project.pixenchant.camera2.manager.CameraManager
 import com.project.pixenchant.camera2.model.CameraRepository
+import com.project.pixenchant.camera2.model.MediaRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,12 @@ object CameraModule {
     @Singleton
     fun provideCameraRepository(cameraManager: CameraManager): CameraRepository {
         return CameraRepository(cameraManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMediaRepository(): MediaRepository {
+        return MediaRepository()
     }
 }
 

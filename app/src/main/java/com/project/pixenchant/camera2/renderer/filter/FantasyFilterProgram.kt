@@ -61,7 +61,5 @@ class FantasyFilterProgram(private val programManager: ProgramManager) : BaseRen
         }
         time = elapsedTime
         setUniform(program, "uTime", time, UniformType.FLOAT)
-
-        Log.d("setUpUniforms", "setUpUniforms time : $time")
     }
 }

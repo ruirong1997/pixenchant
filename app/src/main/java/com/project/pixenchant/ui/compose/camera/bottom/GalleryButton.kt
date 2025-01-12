@@ -1,4 +1,4 @@
-package com.project.pixenchant.ui.compose.camera2.bottom
+package com.project.pixenchant.ui.compose.camera.bottom
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.project.pixenchant.R
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.project.pixenchant.camera2.viewmodel.Camera2ViewModel
-import com.project.pixenchant.ui.compose.camera2.MediaScreen
+import com.project.pixenchant.viewmodel.Camera2ViewModel
+import com.project.pixenchant.ui.compose.camera.MediaScreen
 
 
 @Composable
