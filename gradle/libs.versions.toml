@@ -23,8 +23,8 @@ guava = "33.1.0-jre"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 junit = "4.13.2"
-kotlin = "2.0.0"
-ksp = "2.0.0-1.0.21"
+kotlin = "1.9.23"
+ksp = "1.9.23-1.0.20"
 # @keep
 ktx = "1.13.1"
 lifecycle = "2.7.0"
@@ -52,6 +52,7 @@ cameraCamera2 = "1.2.0"
 cameraView = "1.4.1"
 cameraLifecycle = "1.4.1"
 constraintlayout = "2.0.0"
+playServicesMlkitFaceDetection = "17.1.0"
 
 
 [libraries]
@@ -108,6 +109,7 @@ retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofi
 retrofit2-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-mlkit-face-detection = { group = "com.google.android.gms", name = "play-services-mlkit-face-detection", version.ref = "playServicesMlkitFaceDetection" }
 
 
 [plugins]
@@ -119,5 +121,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+#compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }

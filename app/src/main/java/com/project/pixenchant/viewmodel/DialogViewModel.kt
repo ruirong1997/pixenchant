@@ -12,16 +12,45 @@ class DialogViewModel @Inject constructor(
 ) : ViewModel() {
 
     val showBottomControlDialog = dialogRepository.showBottomControlDialog
+    val showSidebarDialog = dialogRepository.showSideBarDialog
     val showFilterDialog = dialogRepository.showFilterDialog
+    val showFaceDialog = dialogRepository.showFaceDialog
 
     fun showBottomControlDialog(isShow: Boolean) {
         dialogRepository.showBottomControlDialog(isShow)
     }
 
+    fun showSidBarDialog(isShow: Boolean) {
+        dialogRepository.showSidebarDialog(isShow)
+    }
+
     fun showFilterDialog(isShow: Boolean) {
         Log.d("ActionSideBar", "showFilterDialog :$isShow")
-        dialogRepository.showBottomControlDialog(!isShow)
-        dialogRepository.showFilterDialog(isShow)
+        if (isShow) {
+            dialogRepository.showBottomControlDialog(false)
+            dialogRepository.showFaceDialog(false)
+            dialogRepository.showSidebarDialog(false)
+            dialogRepository.showFilterDialog(true)
+        } else {
+            dialogRepository.showFilterDialog(false)
+            dialogRepository.showSidebarDialog(true)
+            dialogRepository.showBottomControlDialog(true)
+        }
     }
+
+    fun showFaceDialog(isShow: Boolean) {
+        Log.d("ActionSideBar", "showFilterDialog :$isShow")
+        if (isShow) {
+            dialogRepository.showBottomControlDialog(false)
+            dialogRepository.showFilterDialog(false)
+            dialogRepository.showSidebarDialog(false)
+            dialogRepository.showFaceDialog(true)
+        } else {
+            dialogRepository.showFaceDialog(false)
+            dialogRepository.showSidebarDialog(true)
+            dialogRepository.showBottomControlDialog(true)
+        }
+    }
+
 
 }

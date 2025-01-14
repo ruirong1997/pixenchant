@@ -19,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.project.pixenchant.camera2.data.MediaType
 import com.project.pixenchant.ui.compose.camera.bottom.BottomCameraControls
 import com.project.pixenchant.viewmodel.Camera2ViewModel
 import com.project.pixenchant.viewmodel.DialogViewModel
@@ -28,33 +27,34 @@ import com.project.pixenchant.viewmodel.DialogViewModel
 @Composable
 fun Camera2Screen(
     camera2ViewModel: Camera2ViewModel = hiltViewModel(),
-    dialogViewModel: DialogViewModel = hiltViewModel()
+    dialogViewModel: DialogViewModel = hiltViewModel(),
 ) {
-    val surfaceTexture = remember { mutableStateOf<SurfaceTexture?>(null) }
+    val mSurfaceTexture = remember { mutableStateOf<SurfaceTexture?>(null) }
 
-    val isShowBottomControl by dialogViewModel.showBottomControlDialog.collectAsState(true)
+    val mIsShowBottomControl by dialogViewModel.showBottomControlDialog.collectAsState(true)
+    val mIsShowSideBar by dialogViewModel.showSidebarDialog.collectAsState(true)
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val lifecycle = lifecycleOwner.lifecycle
+    val mLifecycleOwner = LocalLifecycleOwner.current
+    val mLifecycle = mLifecycleOwner.lifecycle
 
     // 使用 remember 来保持对 observer 的引用
-    val observer = remember {
+    val mObserver = remember {
         LifecycleEventObserver { _, event ->
-            surfaceTexture.value?.apply {
+            mSurfaceTexture.value?.apply {
                 handleLifecycleEvent(event, camera2ViewModel)
             }
         }
     }
 
-    LaunchedEffect(lifecycle) {
+    LaunchedEffect(mLifecycle) {
         // 添加生命周期观察者
-        lifecycle.addObserver(observer)
+        mLifecycle.addObserver(mObserver)
     }
 
-    DisposableEffect(lifecycle) {
+    DisposableEffect(mLifecycle) {
         // 清理观察者，避免内存泄漏
         onDispose {
-            lifecycle.removeObserver(observer)
+            mLifecycle.removeObserver(mObserver)
         }
     }
 
@@ -63,7 +63,7 @@ fun Camera2Screen(
         CameraPreview(
             onInitialized = { surfaceView ->
                 Log.d("Camera2Screen", "CameraPreview onInitialized")
-                surfaceTexture.value = surfaceView // 保存初始化后的 TextureView
+                mSurfaceTexture.value = surfaceView // 保存初始化后的 TextureView
                 camera2ViewModel.setSurfaceView(surfaceView)
                 camera2ViewModel.openCamera()
             },
@@ -72,14 +72,16 @@ fun Camera2Screen(
         )
 
 
-        surfaceTexture.value?.let { textureView ->
+        mSurfaceTexture.value?.let { textureView ->
             // 右侧工具栏
-            ActionSideBar(
-                camera2ViewModel, Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(16.dp)
-            )
-            if (isShowBottomControl) {
+            if (mIsShowSideBar) {
+                ActionSideBar(
+                    camera2ViewModel,
+                    dialogViewModel,
+                    Modifier.align(Alignment.TopEnd).padding(16.dp)
+                )
+            }
+            if (mIsShowBottomControl) {
                 //底部控制栏
                 BottomCameraControls(
                     camera2ViewModel, Modifier

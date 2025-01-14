@@ -11,4 +11,7 @@
     <dimen name="btn_radius">96dp</dimen>
 
     <dimen name="bottom_dialog_height">186dp</dimen>
+
+    <dimen name="bottom_filter_dialog_height">186dp</dimen>
+    <dimen name="bottom_face_dialog_height">186dp</dimen>
 </resources>

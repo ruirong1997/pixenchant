@@ -2,7 +2,6 @@
 <resources>
 
     <string-array name="filter_title_array">
-        <item>None</item>
         <item>@string/featured</item>
         <item>@string/portrait</item>
         <item>@string/daily</item>
@@ -59,6 +58,46 @@
     <string-array name="filter_black_white_array">
         <item>默片</item>
         <item>过往</item>
+    </string-array>
+
+
+    <string-array name="face_array">
+        <item>无</item>
+        <item>磨皮</item>
+        <item>瘦脸</item>
+        <item>小头</item>
+        <item>头包脸</item>
+        <item>大眼</item>
+        <item>眼妆</item>
+        <item>瞳孔大小</item>
+        <item>眼睑下至</item>
+        <item>清晰</item>
+        <item>美白</item>
+        <item>微笑</item>
+        <item>小脸</item>
+        <item>窄脸</item>
+
+        <item>瘦颧骨</item>
+        <item>下颌</item>
+        <item>瘦鼻</item>
+        <item>鼻翼</item>
+        <item>鼻梁</item>
+        <item>嘴形</item>
+
+        <item>嘴巴位置</item>
+        <item>嘴巴宽度</item>
+
+        <item>丰上唇</item>
+        <item>额头</item>
+
+        <item>口红</item>
+        <item>腮红</item>
+        <item>立体</item>
+        <item>白牙</item>
+        <item>黑眼圈</item>
+        <item>法令纹</item>
+
+
     </string-array>
 
 </resources>

@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,16 +23,23 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.project.pixenchant.ui.compose.dialog.FaceDialog
+import com.project.pixenchant.ui.compose.dialog.FilterDialog
 import com.project.pixenchant.ui.compose.permission.CameraPermissionScreen
+import com.project.pixenchant.viewmodel.DialogViewModel
 
 
 @Composable
-fun MainScreen() {
+fun MainScreen(dialogViewModel: DialogViewModel = hiltViewModel()) {
 
     // 存储滑块的值
     val blurStrength = remember { mutableStateOf(0f) }
 
     var glSurfaceView: MyGLSurfaceView? = null
+
+    val mIsOpenFilterDialog by dialogViewModel.showFilterDialog.collectAsState(false)
+    val mIsOpenFaceDialog by dialogViewModel.showFaceDialog.collectAsState(false)
 
     Box(
         modifier = Modifier
@@ -52,6 +61,18 @@ fun MainScreen() {
                 .background(Color.Black)
         )
 
+
+        //滤镜弹窗
+        FilterDialog(
+            openDialog = mIsOpenFilterDialog,
+            onDismiss = { dialogViewModel.showFilterDialog(false) },
+        )
+
+        //美颜弹窗
+        FaceDialog(
+            openDialog = mIsOpenFaceDialog,
+            onDismiss = { dialogViewModel.showFaceDialog(false) },
+        )
         //测试用
         // 使用 AndroidView 来嵌入 GLSurfaceView
 //        Surface(modifier = Modifier

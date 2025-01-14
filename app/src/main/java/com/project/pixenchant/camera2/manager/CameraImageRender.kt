@@ -34,6 +34,14 @@ class CameraImageRender {
 
     private var previewReader: ImageReader? = null
 
+    fun initPreviewRenderer(width: Int, height: Int) {
+        previewReader = ImageReader.newInstance(width, height, ImageFormat.YUV_420_888, 2)
+    }
+
+
+    fun getPreviewRender(): ImageReader {
+        return previewReader ?: throw RuntimeException("Need Init ImageReaderManager")
+    }
 
     fun getCaptureRender(): ImageReader {
         return captureImageReader ?: throw RuntimeException("Need Init ImageReaderManager")

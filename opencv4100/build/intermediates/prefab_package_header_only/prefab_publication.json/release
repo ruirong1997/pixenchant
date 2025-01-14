@@ -1,0 +1,17 @@
+{
+  "installationFolder": "/Users/chenruirong/Desktop/demo/PixEnchant/opencv4100/build/intermediates/prefab_package/release/prefab",
+  "gradlePath": ":opencv4100",
+  "packageInfo": {
+    "packageName": "opencv4100",
+    "packageSchemaVersion": 2,
+    "packageDependencies": [],
+    "modules": [
+      {
+        "moduleName": "opencv_jni_shared",
+        "moduleHeaders": "/Users/chenruirong/Desktop/demo/PixEnchant/opencv4100/native/jni/include",
+        "moduleExportLibraries": [],
+        "abis": []
+      }
+    ]
+  }
+}

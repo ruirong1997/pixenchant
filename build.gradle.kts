@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.android.test) apply false
     alias(libs.plugins.gradle.versions)
     alias(libs.plugins.version.catalog.update)
-    alias(libs.plugins.compose.compiler)
+//    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.androidLibrary) apply false
 }
 

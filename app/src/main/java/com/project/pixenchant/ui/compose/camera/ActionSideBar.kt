@@ -1,6 +1,5 @@
 package com.project.pixenchant.ui.compose.camera
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -14,18 +13,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,32 +31,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pixenchant.R
 import com.project.pixenchant.ext.noRippleSingleClick
+import com.project.pixenchant.ui.compose.dialog.FaceDialog
 import com.project.pixenchant.viewmodel.Camera2ViewModel
 import com.project.pixenchant.ui.compose.dialog.FilterDialog
 import com.project.pixenchant.ui.compose.dialog.FilterSelectDialog
 import com.project.pixenchant.viewmodel.DialogViewModel
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 /**
  * 右侧工具栏
  */
 @Composable
 fun ActionSideBar(cameraViewModel: Camera2ViewModel,
-                  modifier: Modifier = Modifier,
-                  dialogViewModel: DialogViewModel = hiltViewModel()) {
+                  dialogViewModel: DialogViewModel,
+                  modifier: Modifier = Modifier) {
 
     val openFilterDialog = remember { mutableStateOf(false) }
-    val isOpenFilterDialog by dialogViewModel.showFilterDialog.collectAsState(false)
-
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -77,16 +63,10 @@ fun ActionSideBar(cameraViewModel: Camera2ViewModel,
 
         ActionItem(R.drawable.ic_switch_camera, "翻转") { cameraViewModel.switchCamera() }
         ActionItem(R.drawable.ic_filter, "滤镜") { dialogViewModel.showFilterDialog(true) }
+        ActionItem(R.drawable.ic_face_enhancement, "美颜") { dialogViewModel.showFaceDialog(true) }
 //        ActionItem(R.drawable.ic_switch_camera, "切换摄像头") { cameraViewModel.switchCamera() }
 
     }
-
-    //滤镜弹窗
-    FilterDialog(
-        openDialog = isOpenFilterDialog,
-        onDismiss = { dialogViewModel.showFilterDialog(false) },
-        onOpen = { } // 外部控制打开弹窗
-    )
 }
 
 @Composable

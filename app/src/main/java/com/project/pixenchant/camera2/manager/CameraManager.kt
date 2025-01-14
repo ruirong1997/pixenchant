@@ -133,7 +133,6 @@ class CameraManager @Inject constructor() {
     fun release() {
         cameraScope.cancel()
     }
-
     /**
      * 开始相机预览
      */
@@ -141,7 +140,8 @@ class CameraManager @Inject constructor() {
         renderer.setRotationAngle(getRotationAngle().toFloat(), isUsingFrontCamera)
         val previewSize = getBestPreviewSize(getCameraId(isUsingFrontCamera), 1080, 2160)
         surfaceTexture.setDefaultBufferSize(previewSize.width, previewSize.height)
-        Log.d("Camera2Manager", "startPreview ${getCameraDevice()}")
+        cameraImageRender.initPreviewRenderer(1080,2160)
+
 //        textureView.surfaceTexture?.let { texture ->
 //            texture.setDefaultBufferSize(textureView.width, textureView.height)
 //            cameraImageRender.initCaptureReader(textureView)

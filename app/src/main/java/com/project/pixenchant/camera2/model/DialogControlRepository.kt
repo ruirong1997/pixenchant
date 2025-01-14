@@ -13,10 +13,22 @@ class DialogControlRepository @Inject constructor() {
     val showBottomControlDialog = _showBottomControlDialog
 
     /**
+     * 右侧功能控制栏
+     */
+    private val _showSideBarDialog = MutableStateFlow(true)
+    val showSideBarDialog = _showSideBarDialog
+
+    /**
      * 滤镜弹窗
      */
     private val _showFilterDialog = MutableStateFlow(false)
     val showFilterDialog = _showFilterDialog
+
+    /**
+     * 美颜
+     */
+    private val _showFaceDialog = MutableStateFlow(false)
+    val showFaceDialog = _showFaceDialog
 
 
     fun showBottomControlDialog(isShow: Boolean) {
@@ -25,5 +37,13 @@ class DialogControlRepository @Inject constructor() {
 
     fun showFilterDialog(isShow: Boolean) {
         _showFilterDialog.value = isShow
+    }
+
+    fun showFaceDialog(isShow: Boolean) {
+        _showFaceDialog.value = isShow
+    }
+
+    fun showSidebarDialog(isShow: Boolean) {
+        _showSideBarDialog.value = isShow
     }
 }
