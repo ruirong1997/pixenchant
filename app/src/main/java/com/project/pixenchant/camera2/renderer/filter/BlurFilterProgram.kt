@@ -8,12 +8,12 @@ import android.util.Log
 import com.project.pixenchant.R
 import com.project.pixenchant.camera2.data.UniformType
 import com.project.pixenchant.camera2.renderer.utils.FilterUtils.setUniform
-import com.project.pixenchant.camera2.renderer.manager.ProgramManager
+import com.project.pixenchant.camera2.renderer.manager.RenderManager
 import com.project.pixenchant.ext.getAppContext
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-class BlurFilterProgram(private val programManager: ProgramManager) : BaseRendererFilter() {
+class BlurFilterProgram(private val programManager: RenderManager) : BaseRendererFilter() {
 
     private var mBitmap: Bitmap? = null
 

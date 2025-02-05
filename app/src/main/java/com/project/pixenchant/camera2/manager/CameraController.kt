@@ -177,7 +177,9 @@ class CameraController @Inject constructor(
      */
     fun startPreview(surfaceList: List<Surface>) {
         cameraDevice?.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)?.apply {
-            addTarget(surfaceList.first())
+            surfaceList.forEachIndexed { _, surface ->
+                addTarget(surface)
+            }
             createCaptureSession(surfaceList, this)
         }
     }
@@ -187,7 +189,9 @@ class CameraController @Inject constructor(
      */
     suspend fun startPreviewAndWait(surfaceList: List<Surface>) {
         cameraDevice?.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW)?.apply {
-            addTarget(surfaceList.first())
+            surfaceList.forEachIndexed { _, surface ->
+                addTarget(surface)
+            }
             createCaptureSessionAndWait(surfaceList, this)
         }
     }

@@ -5,7 +5,7 @@ import android.content.Context
 import com.project.pixenchant.camera2.data.CameraModeItem
 import com.project.pixenchant.camera2.data.CameraMode
 import com.project.pixenchant.camera2.manager.CameraManager
-import com.project.pixenchant.utils.PermissionUtil
+import com.project.pixenchant.utils.PermissionUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
@@ -37,12 +37,12 @@ class CameraRepository @Inject constructor(
 
     // 检查相机权限
     fun checkPermission(context: Context): Boolean {
-        return PermissionUtil.checkCameraPermission(context)
+        return PermissionUtils.checkCameraPermission(context)
     }
 
     // 请求相机权限
     fun requestPermission(activity: Activity) {
-        PermissionUtil.requestCameraPermission(activity)
+        PermissionUtils.requestCameraPermission(activity)
     }
 
     // 切换摄像头

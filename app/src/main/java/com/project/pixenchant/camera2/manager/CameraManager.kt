@@ -1,10 +1,13 @@
 package com.project.pixenchant.camera2.manager
 
 import android.graphics.Bitmap
+import android.graphics.ImageFormat
 import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
+import android.media.Image
+import android.media.ImageReader
 import android.util.Log
 import android.util.Size
 import android.view.Surface
@@ -36,13 +39,13 @@ class CameraManager @Inject constructor() {
     private val windowManager = getAppContext().getSystemService(WindowManager::class.java)
     private val cameraImageRender = CameraImageRender()
 //    private val renderer = CameraRenderer()
-    private val renderer = CameraRenderer()
+    @Inject lateinit var renderer: CameraRenderer
 
     // 用于管理协程任务的作用域
     private val cameraScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     // 当前是否使用前置摄像头
-    private var isUsingFrontCamera = false
+    private var isUsingFrontCamera = true
 
     // 用于标识相机切换状态
     private val isCameraSwitching = AtomicBoolean(false)
@@ -79,7 +82,6 @@ class CameraManager @Inject constructor() {
             if (cameraStateManager.isPrepared()) return@launch
             if (cameraController.openCamera(cameraId)) {
                 startPreview(surfaceTexture)
-
             }
         }
     }
@@ -133,40 +135,41 @@ class CameraManager @Inject constructor() {
     fun release() {
         cameraScope.cancel()
     }
+
+    private val testWidth = 720
+    private val testHeight= 1280
+
     /**
      * 开始相机预览
      */
     fun startPreview(surfaceTexture: SurfaceTexture) {
+        // 1. 设置预览角度、预览尺寸等参数
         renderer.setRotationAngle(getRotationAngle().toFloat(), isUsingFrontCamera)
-        val previewSize = getBestPreviewSize(getCameraId(isUsingFrontCamera), 1080, 2160)
+        val previewSize = getBestPreviewSize(getCameraId(isUsingFrontCamera), testWidth, testHeight)
         surfaceTexture.setDefaultBufferSize(previewSize.width, previewSize.height)
-        cameraImageRender.initPreviewRenderer(1080,2160)
+        cameraImageRender.initPreviewRenderer(previewSize.width, previewSize.height) { image: Image ->
+            //TODO  待优化 回收频繁
+            val bitmap = BitmapUtils.rotateAndMirrorBitmap(BitmapUtils.yuv420ToArgb8888(image))
+            getCameraRenderer().updateImage(bitmap)
+        }
 
-//        textureView.surfaceTexture?.let { texture ->
-//            texture.setDefaultBufferSize(textureView.width, textureView.height)
-//            cameraImageRender.initCaptureReader(textureView)
-//            cameraImageRender.initPreviewReader(textureView)
-//            val captureSurface = listOf(
-//                cameraImageRender.getPreviewReader().surface,
-//                cameraImageRender.getCaptureRender().surface
-//            )
-//            cameraController.startPreview(captureSurface)
-//        }
+        // 2. 创建预览用的 Surface（一般来自 SurfaceTexture）
         val previewSurface = Surface(surfaceTexture)
-        val surfaceList =
-            listOf(previewSurface/*, cameraImageRender.getCaptureRender().surface*/)
 
+        // 4. 将预览 Surface 和 ImageReader 的 Surface 组合成列表传入 cameraController.startPreview
+        val surfaceList = listOf(previewSurface, cameraImageRender.getPreviewRender().surface)
 
+        // 5. 启动预览
         cameraController.startPreview(surfaceList)
     }
 
     suspend fun startPreviewAndWait(surfaceTexture: SurfaceTexture) {
         renderer.setRotationAngle(getRotationAngle().toFloat(), isUsingFrontCamera)
-        val previewSize = getBestPreviewSize(getCameraId(isUsingFrontCamera), 1080, 2160)
+        val previewSize = getBestPreviewSize(getCameraId(isUsingFrontCamera), testWidth, testHeight)
         surfaceTexture.setDefaultBufferSize(previewSize.width,previewSize.height)
         val previewSurface = Surface(surfaceTexture)
-        val surfaceList =
-            listOf(previewSurface/*, cameraImageRender.getCaptureRender().surface*/)
+        //TODO 添加人脸用surface
+        val surfaceList = listOf(previewSurface/*, cameraImageRender.getCaptureRender().surface*/)
 
 //            texture.setDefaultBufferSize(textureView.width, textureView.height)
 //            cameraImageRender.initCaptureReader(textureView)
@@ -241,7 +244,7 @@ class CameraManager @Inject constructor() {
         return cameraController.getCameraCharacteristics(cameraId)
     }
 
-    fun getRenderer(): CameraRenderer{
+    fun getCameraRenderer(): CameraRenderer{
         return renderer
     }
 

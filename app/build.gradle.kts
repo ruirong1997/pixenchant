@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.project.pixenchant"
-        minSdk = 21
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -58,7 +58,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -75,9 +74,11 @@ dependencies {
     implementation(libs.androidx.compose.ui.viewbinding)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.runtime.livedata)
-
+    // Mediapipe dependencies
+    // MediaPipe Library
+    implementation("com.google.mediapipe:tasks-vision:0.10.14")
     implementation("com.github.bumptech.glide:glide:4.15.1")
-    implementation(project(":opencv4100"))
+//    implementation(project(":opencv4100"))
     ksp ("com.github.bumptech.glide:compiler:4.15.1")
     implementation ("io.coil-kt:coil-compose:2.5.0")// 版本可以根据需要调整
 

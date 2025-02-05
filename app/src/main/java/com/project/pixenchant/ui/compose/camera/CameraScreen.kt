@@ -4,7 +4,9 @@ import android.graphics.SurfaceTexture
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +21,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.project.pixenchant.ext.pxToDp
+import com.project.pixenchant.ext.toPx
 import com.project.pixenchant.ui.compose.camera.bottom.BottomCameraControls
 import com.project.pixenchant.viewmodel.Camera2ViewModel
 import com.project.pixenchant.viewmodel.DialogViewModel

@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import dagger.hilt.android.HiltAndroidApp
-import org.opencv.android.OpenCVLoader
+//import org.opencv.android.OpenCVLoader
 
 @HiltAndroidApp
 class PixEnchantApplication: Application() {
@@ -22,7 +22,7 @@ class PixEnchantApplication: Application() {
         super.onCreate()
         sAppContext = applicationContext
 
-//        if (OpenCVLoader.initDebug()) {
+//        if (OpenCVLoader.initLocal()) {
 //            Log.d("OpenCVLoader", "Opencv加载成功。。。")
 //        } else {
 //            Log.d("OpenCVLoader", "Opencv加载失败。。。")

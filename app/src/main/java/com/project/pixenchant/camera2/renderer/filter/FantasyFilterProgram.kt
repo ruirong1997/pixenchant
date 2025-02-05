@@ -2,15 +2,14 @@ package com.project.pixenchant.camera2.renderer.filter
 
 import android.graphics.SurfaceTexture
 import android.opengl.GLES30
-import android.util.Log
 import com.project.pixenchant.R
 import com.project.pixenchant.camera2.data.UniformType
 import com.project.pixenchant.camera2.renderer.utils.FilterUtils.setUniform
-import com.project.pixenchant.camera2.renderer.manager.ProgramManager
+import com.project.pixenchant.camera2.renderer.manager.RenderManager
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-class FantasyFilterProgram(private val programManager: ProgramManager) : BaseRendererFilter() {
+class FantasyFilterProgram(private val programManager: RenderManager) : BaseRendererFilter() {
     private var startTime = System.nanoTime()
     private var time: Float = 0f
 
@@ -28,8 +27,6 @@ class FantasyFilterProgram(private val programManager: ProgramManager) : BaseRen
 
     override fun onDrawFrame(gl: GL10?, surfaceTexture: SurfaceTexture?) {
         super.onDrawFrame(gl, surfaceTexture)
-
-        surfaceTexture?.updateTexImage()
 
         GLES30.glUseProgram(mProgram)
 

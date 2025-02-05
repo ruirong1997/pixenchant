@@ -33,12 +33,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.project.pixenchant.R
 import com.project.pixenchant.ext.noRippleSingleClick
-import com.project.pixenchant.ui.compose.dialog.FaceDialog
 import com.project.pixenchant.viewmodel.Camera2ViewModel
-import com.project.pixenchant.ui.compose.dialog.FilterDialog
 import com.project.pixenchant.ui.compose.dialog.FilterSelectDialog
 import com.project.pixenchant.viewmodel.DialogViewModel
 
@@ -49,12 +46,6 @@ import com.project.pixenchant.viewmodel.DialogViewModel
 fun ActionSideBar(cameraViewModel: Camera2ViewModel,
                   dialogViewModel: DialogViewModel,
                   modifier: Modifier = Modifier) {
-
-    val openFilterDialog = remember { mutableStateOf(false) }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-
-    }
 
     Column(
         modifier = modifier,

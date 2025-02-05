@@ -30,12 +30,12 @@ class Camera2ViewModel @Inject constructor(
 ) : ViewModel() {
 
     @SuppressLint("StaticFieldLeak")
-    private var surfaceTexture: SurfaceTexture? = null
+    private var mSurfaceTexture: SurfaceTexture? = null
 
     @Inject
-    lateinit var cameraManager: CameraManager
+    lateinit var mCameraManager: CameraManager
 
-    private val windowManager = getAppContext().getSystemService(WindowManager::class.java)
+    private val mWindowManager = getAppContext().getSystemService(WindowManager::class.java)
 
     private val _hasCameraPermission = MutableStateFlow(false)
     val hasCameraPermission = _hasCameraPermission
@@ -48,7 +48,7 @@ class Camera2ViewModel @Inject constructor(
     val imageList = mediaRepository.imageList
 
     fun setSurfaceView(view: SurfaceTexture) {
-        surfaceTexture = view
+        mSurfaceTexture = view
     }
 
     fun updatePermissionStatus(granted: Boolean) {
@@ -56,20 +56,20 @@ class Camera2ViewModel @Inject constructor(
     }
 
     fun getCurCameraId(): String {
-        return cameraManager.getCameraId()
+        return mCameraManager.getCameraId()
     }
 
     /**
      * 打开摄像头
      */
     fun openCamera(cameraId: String = getCurCameraId()) {
-        surfaceTexture?.let {
-            cameraManager.openCamera(it, cameraId)
+        mSurfaceTexture?.let {
+            mCameraManager.openCamera(it, cameraId)
         }
     }
 
     fun closeCamera() {
-        cameraManager.closeCameraDevice()
+        mCameraManager.closeCameraDevice()
     }
 
 
@@ -77,8 +77,8 @@ class Camera2ViewModel @Inject constructor(
      * 切换摄像头
      */
     fun switchCamera() {
-        surfaceTexture?.let {
-            cameraManager.switchCamera(it)
+        mSurfaceTexture?.let {
+            mCameraManager.switchCamera(it)
         }
     }
 
@@ -112,30 +112,30 @@ class Camera2ViewModel @Inject constructor(
 
     fun startPreview() {
         Log.d("Camera2ViewModel", "StartPreView")
-        surfaceTexture?.let { cameraManager.startPreview(it) }
+        mSurfaceTexture?.let { mCameraManager.startPreview(it) }
     }
 
     fun stopPreview() {
-        cameraManager.stopPreview()
+        mCameraManager.stopPreview()
     }
 
     // 捕捉照片并自动旋转到正确角度
     fun capturePhoto(onPhotoCaptured: (Bitmap) -> Unit) {
-        val rotation = windowManager.defaultDisplay.rotation
-        val orientation = getCaptureOrientation(rotation, cameraManager.getCameraCharacteristics(getCurCameraId()))
+        val rotation = mWindowManager.defaultDisplay.rotation
+        val orientation = getCaptureOrientation(rotation, mCameraManager.getCameraCharacteristics(getCurCameraId()))
 
-        cameraManager.capturePhoto { bitmap ->
+        mCameraManager.capturePhoto { bitmap ->
             val rotatedBitmap = BitmapUtils.rotateBitmap(bitmap, orientation)
             onPhotoCaptured(rotatedBitmap)
         }
     }
 
     fun getRenderer(): CameraRenderer {
-        return cameraManager.getRenderer()
+        return mCameraManager.getCameraRenderer()
     }
 
     override fun onCleared() {
-        surfaceTexture = null
+        mSurfaceTexture = null
         super.onCleared()
     }
 

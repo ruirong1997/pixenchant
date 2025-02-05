@@ -46,7 +46,7 @@ fun CameraPreview(
     AndroidView(
         factory = { context ->
             GLSurfaceView(context).apply {
-                setEGLContextClientVersion(3) // OpenGL ES 2.0
+                setEGLContextClientVersion(3) // OpenGL ES 3.0
 
                 val renderer = cameraViewModel.getRenderer()
                 setRenderer(renderer) // 设置自定义渲染器

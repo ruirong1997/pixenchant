@@ -24,7 +24,6 @@ abstract class BaseRendererFilter: IBaseFilter {
     val mBufferManager = BufferManager.instance
     var mProgram = 0
 
-
     private var mRotationMatrix = FloatArray(16).apply { Matrix.setIdentityM(this, 0) }
     private var mRotationAngle: Float = 0f
 

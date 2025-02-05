@@ -1,6 +1,5 @@
 package com.project.pixenchant.ui.compose
 
-import MyGLSurfaceView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,7 +35,6 @@ fun MainScreen(dialogViewModel: DialogViewModel = hiltViewModel()) {
     // 存储滑块的值
     val blurStrength = remember { mutableStateOf(0f) }
 
-    var glSurfaceView: MyGLSurfaceView? = null
 
     val mIsOpenFilterDialog by dialogViewModel.showFilterDialog.collectAsState(false)
     val mIsOpenFaceDialog by dialogViewModel.showFaceDialog.collectAsState(false)

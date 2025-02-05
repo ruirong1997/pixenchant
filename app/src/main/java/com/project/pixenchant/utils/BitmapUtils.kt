@@ -8,6 +8,7 @@ import android.graphics.Matrix
 import android.graphics.Rect
 import android.graphics.YuvImage
 import android.media.Image
+import android.util.Log
 import android.view.TextureView
 import java.io.ByteArrayOutputStream
 import kotlin.math.max
@@ -40,6 +41,53 @@ object BitmapUtils {
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
 
+    fun yuv420ToArgb8888(image: Image): Bitmap {
+        val width = image.width
+        val height = image.height
+
+        val yBuffer = image.planes[0].buffer // Y 平面
+        val uBuffer = image.planes[1].buffer // U 平面
+        val vBuffer = image.planes[2].buffer // V 平面
+
+        val yRowStride = image.planes[0].rowStride
+        val uvRowStride = image.planes[1].rowStride
+        val uvPixelStride = image.planes[1].pixelStride
+
+        val argb8888 = IntArray(width * height)
+
+        for (y in 0 until height) {
+            for (x in 0 until width) {
+                val yIndex = y * yRowStride + x
+                val uvIndex = (y / 2) * uvRowStride + (x / 2) * uvPixelStride
+
+                val yValue = yBuffer[yIndex].toInt() and 0xFF
+                val uValue = uBuffer[uvIndex].toInt() and 0xFF
+                val vValue = vBuffer[uvIndex].toInt() and 0xFF
+
+                // YUV 转 RGB
+                val r = (yValue + 1.402f * (vValue - 128)).toInt()
+                val g = (yValue - 0.344f * (uValue - 128) - 0.714f * (vValue - 128)).toInt()
+                val b = (yValue + 1.772f * (uValue - 128)).toInt()
+
+                argb8888[y * width + x] =
+                    (0xFF shl 24) or // Alpha
+                            (r.coerceIn(0, 255) shl 16) or
+                            (g.coerceIn(0, 255) shl 8) or
+                            (b.coerceIn(0, 255))
+            }
+        }
+
+        return Bitmap.createBitmap(argb8888, width, height, Bitmap.Config.ARGB_8888)
+    }
+
+
+    fun rotateAndMirrorBitmap(bitmap: Bitmap): Bitmap {
+        val matrix = Matrix().apply {
+            postRotate(270f)  // 旋转 90°
+            postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f) // 左右镜像翻转
+        }
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    }
 
     fun rotateBitmap(bitmap: Bitmap, orientation: Int): Bitmap {
         val matrix = Matrix()
